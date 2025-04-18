@@ -1,80 +1,107 @@
 describe('Trello Automation', () => {
   beforeEach(() => {
-
     cy.viewport(1200, 760);
-    cy.visit('https://trello.com/login'); // Landing the Trello login page
+    cy.visit('https://trello.com/login');
 
     // Log in using environment variables for credentials
     cy.get('#username').type(Cypress.env('username'));
     cy.get('button[type="submit"]').click();
     cy.get('input[type="password"]').type(Cypress.env('password'));
     cy.get('button[type="submit"]').click();
+
     cy.wait(20000);
-    cy.get('.EGjNp3D4jt2GM7').contains(Cypress.env('boardName')).should('be.visible').click();
+    cy.contains(Cypress.env('boardName')).should('be.visible').click();
   });
 
   it('Add and verify a new card', () => {
-    cy.visit('https://trello.com/b/6MQxpoEl/my-trello-board'); 
-    //add a card button
-    cy.get('[data-list-id="6800bfae3ab9931e60298988"] > [data-testid="list"] > [data-testid="list-footer"] > [data-testid="list-add-card-button"]')
-      .should('be.visible').click();
+    cy.visit('https://trello.com/b/6MQxpoEl/my-trello-board');
 
-    // Enter the card title
+    // Add a new card
+    cy.get('[data-list-id="6800bfae3ab9931e60298988"] [data-testid="list-add-card-button"]')
+      .should('be.visible')
+      .click();
+
     cy.get('[data-testid="list-card-composer-textarea"]')
       .should('be.visible')
       .type(Cypress.env('cardTitle'));
 
-    // Assert the value was typed correctly
-    cy.get('textarea[placeholder="Enter a title or paste a link"]')
-      .should('have.value', (Cypress.env('cardTitle')));
     cy.get('[data-testid="list-card-composer-add-card-button"]').click();
- 
-    // Assert that the card was added
+
+    // Verify the card is added
     cy.contains(Cypress.env('cardTitle')).should('exist');
+
+    // Open the card modal
     cy.get('.amUfYqLTZOvGsn').should('be.visible');
+    cy.get('.WC6fBZ3Z4IYlvP').click();
+    cy.get('.FOAGIKgFwAdtpQ.xY6NBEQos8kXPJ').click();
+    cy.get('[data-testid="quick-card-editor-button"]').click();
+    cy.wait(1000);
+    cy.get('[data-testid="quick-card-editor-open-card"]').click();
 
-    cy.contains('a', 'Test card event-1').click();
-
-    //cy.get('.amUfYqLTZOvGsn.FOAGIKgFwAdtpQ.xY6NBEQos8kXPJ').eq(0).click();
-
-   // Verify the card modal is open
-   cy.wait(20000);
-   cy.get("textarea[aria-label='Test card event-1']").should('contain',Cypress.env('cardTitle'));
-   
+    // Wait for the modal to open  
     cy.get('.xjFudI2rOfHcKY', { timeout: 10000 })
       .should('be.visible')
       .and('contain', Cypress.env('cardTitle'));
-    cy.get('.xjFudI2rOfHcKY').should('have.class', 'xjFudI2rOfHcKY'); 
-    cy.get('.xjFudI2rOfHcKY').should('contain', Cypress.env('cardTitle'));
+
+    //Take screenshot of the empty new card modal
     cy.screenshot();
-    cy.log('Card Modal opened successfully');
+    cy.log('Card Modal opened successfully'); 
 
     cy.get('.X8WOA764yXoFYj', { timeout: 10000 })
       .invoke('text')
-      .should('include', 'Sasikumar B added this card to Today')
+      .should('include', 'Sasikumar B added this card to Today');
 
+    // Add description text
+    cy.get('#ak-editor-textarea').type('Test description');
+    cy.get('[data-testid="description-save-button"]').click();
+    cy.get('p[data-renderer-start-pos="1"]').should('contain', 'Test description');
 
-    // Archive
+    // Add member deom the dropdown
+    cy.get('[data-testid="card-back-members-button"]').click();
+    cy.get('[data-testid="choose-member-item-add-member-button"]').click();
+
+    // Select the from date picker 
+    cy.get('[data-testid="card-back-due-date-button"]').click();
+    cy.get('[data-testid="save-date-button"]').click();
+
+    // Fill Priority custom field
+    cy.get('[data-testid="card-back-custom-field-badge-select--control"]').eq(0).click();
+    cy.get('div.customFieldSelect__menu-portal div:nth-of-type(2) li').click({ force: true });
+
+    // Add status
+    cy.get('[data-testid="card-back-custom-field-badge-select--control"]').eq(1).click();
+    cy.get('[data-testid="card-back-custom-field-badge-select--option-1"] > li').click();
+
+    //check Archive buttion
     cy.get('[data-testid="card-back-archive-button"]')
       .scrollIntoView()
       .should('be.visible')
       .click();
 
-    //Delete the card by using delete button on card detail
-    cy.get('[data-testid="card-back-delete-card-button"]').click();
-    cy.get('button[data-testid="popover-confirm-button"]').click({ force: true });
+    // Check the Delete button visible 
+    cy.get('[data-testid="card-back-delete-card-button"]').should('be.visible')  
 
+    //Add comment to the card
+    cy.get('input[placeholder="Write a comment…"]').click().type('Test comment');
+    cy.get('[data-testid="card-back-comment-save-button"]').click();
+    cy.get('p[data-renderer-start-pos="1"]').should('contain', 'Test comment');
 
+     //Take screenshot of the empty new card modal
+     cy.screenshot();
+     cy.log('Card updaed successfully'); 
+     cy.get('button[aria-label="Close dialog"]').click();
+  
+    //Archive card using quick action
+    cy.get('.FOAGIKgFwAdtpQ.xY6NBEQos8kXPJ').click();
+    cy.get('[data-testid="quick-card-editor-button"]').click();
+    cy.wait(1000);
+    cy.get('[button[data-testid="quick-card-editor-archive"]').click();
     cy.contains(Cypress.env('cardTitle')).should('not.exist');
-
   });
 });
 
-
+// Ignore any uncaught exceptions
 Cypress.on('uncaught:exception', (err, runnable) => {
-  // Log the error message for debugging purposes
   console.error('Uncaught exception:', err.message);
-
-  // Return false to prevent Cypress from failing the test
   return false;
 });
