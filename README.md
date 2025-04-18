@@ -2,7 +2,7 @@
 
 This project demonstrates how to use **Cypress** to test a **hidden off-canvas modal** — similar to how **Trello** reveals a detailed card modal on click.
 
-Here’s a Cypress automation script for a challenge involving hidden elements, specifically simulating the behavior in Trello, where clicking a card reveals a modal sliding in from the right (off-canvas modal).
+Here’s a Cypress automation script for a challenge involving hidden elements 
 
 ### Test Objective
 🔍This automation ensures:
@@ -13,6 +13,56 @@ Here’s a Cypress automation script for a challenge involving hidden elements, 
 - ✅ Assert the modal becomes visible and contains expected content
 - ✅ Take a screenshot of the modal
 - ✅ Close the card details by deleting it
+
+## 🚀 Features Covered
+
+### 🔐 Login to Trello
+- Navigates to the Trello login page.
+- Logs in using environment variables (`username`, `password`).
+- Waits for the board to load and clicks on the specified board (`boardName`).
+
+### 📋 Card Operations
+
+#### ➕ Add a New Card
+- Adds a card to a specific list using `cardTitle` from environment variables.
+
+#### ✅ Verify Card Creation
+- Confirms that the new card appears on the board.
+
+#### 🔍 Open Card Modal
+- Opens the card details modal.
+- Verifies that the modal title matches the card name.
+
+#### 📝 Card Details Update
+- **Add Description**: Inputs and saves a description.
+- **Add Member**: Assigns a member via dropdown.
+- **Set Due Date**: Opens the date picker and saves the due date.
+- **Custom Fields**: Sets `Priority` and `Status` using custom field selectors.
+
+#### 🗃️ Archive and Restore
+- Archives the card.
+- Restores the card to verify the archive/restore flow.
+
+#### 💬 Add Comment
+- Adds a comment to the card.
+- Validates the comment is saved.
+
+#### 📸 Screenshot & Logging
+- Takes screenshots when the card is opened and updated.
+- Logs messages for better visibility in test reports.
+
+#### ❌ Delete Card
+- Archives the card.
+- Permanently deletes it.
+- Verifies the card no longer exists on the board.
+
+---
+
+## ⚠️ Exception Handling
+- Ignores any uncaught exceptions to prevent test failure from unrelated Trello errors.
+
+---
+
 
 🧾 Test File Structure
 ```cypress/
