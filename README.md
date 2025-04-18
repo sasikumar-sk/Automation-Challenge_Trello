@@ -6,12 +6,13 @@ Here’s a Cypress automation script for a challenge involving hidden elements, 
 
 ### Test Objective
 🔍This automation ensures:
+- ✅ Login into the trello.com and select open the my-trello-board
 - ✅ Verify the card details is hidden on page load
 - ✅ Add new card to board
 - ✅ Click a card to trigger the detailed modal
 - ✅ Assert the modal becomes visible and contains expected content
 - ✅ Take a screenshot of the modal
-- ✅ Close the modal by deleting it
+- ✅ Close the card details by deleting it
 
 🧾 Test File Structure
 ```cypress/
