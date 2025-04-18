@@ -6,36 +6,49 @@ Here’s a Cypress automation script for a challenge involving hidden elements, 
 
 ### Test Objective
 🔍This automation ensures:
-✅ Verify the card details is hidden on page load  
-✅ Add mew card to board
-✅ Click a card to trigger the detailed modal  
-✅ Assert the modal becomes visible and contains expected content
-✅ Take a screenshot of the model
-✅ Close the modal by deleting it
+- ✅ Verify the card details is hidden on page load
+- ✅ Add new card to board
+- ✅ Click a card to trigger the detailed modal
+- ✅ Assert the modal becomes visible and contains expected content
+- ✅ Take a screenshot of the modal
+- ✅ Close the modal by deleting it
 
 🧾 Test File Structure
-cypress/
+```cypress/
 ├── e2e/
 │   └── trello-card.cy.js
-
+```
 🛠️ Technologies Used
-Cypress – End-to-end testing framework
-JavaScript 
+
+- Cypress – End-to-end testing framework
+
+- JavaScript 
 
 📸 Screenshots & Logging
-    cy.screenshot();
-    cy.log('Card Modal opened successfully');
-
+```
+cy.screenshot();
+cy.log('Card Modal opened successfully');
+```
 ## ⚙️ Setup Instructions
 
 1. Clone the repository
-```bash
+
+```
 git clone https://github.com/sasikumar-sk/Automation-Challenge_Trello.git
+
 cd Automation-Challenge_Trello
+```
 
 2. Install dependencies :
+```
 npm install
-
+```
 3. Run the Tests :
-GUI mode : npx cypress open
-Headless mode : npx cypress run
+GUI mode :
+```
+npx cypress open
+```
+Headless mode : 
+```
+npx cypress run
+```
