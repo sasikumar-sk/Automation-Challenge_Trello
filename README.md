@@ -53,3 +53,5 @@ Headless mode :
 ```
 npx cypress run
 ```
+ 
+**Demo** : https://jam.dev/c/eb0cdf68-b418-4d64-8de1-10bf29af4d1e
