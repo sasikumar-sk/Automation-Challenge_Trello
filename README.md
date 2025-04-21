@@ -103,5 +103,16 @@ Headless mode :
 ```
 npx cypress run
 ```
- 
-**Demo** :  https://www.awesomescreenshot.com/video/38898652?key=d1fd09977a556fa55c8d9e201b51b295
+
+Here's a quick rundown of common methods and approaches for hiding elements in Cypress:
+
+- .force(): Forces interactions with hidden elements (e.g., clicking, typing).
+
+- .invoke('show'): Temporarily makes an element visible for interactions.
+
+- .trigger(): Simulates user interactions (e.g., hover, click) to make hidden elements visible.
+
+- .should('not.be.visible'): Asserts that an element is hidden.
+
+- .invoke('css', 'display', 'none'): Manipulate the element’s visibility.
+
