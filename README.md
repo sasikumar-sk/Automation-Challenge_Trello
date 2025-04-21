@@ -1,6 +1,18 @@
-# 🚀 Cypress Automation Challenge – Trello-style Hidden Modal Test
+# 🚀 Cypress Automation Challenge – Trello Hidden Modal Test
 
 This project demonstrates how to use **Cypress** to test a **hidden off-canvas modal** — similar to how **Trello** reveals a detailed card modal on click.
+
+Here's a quick rundown of common methods and approaches for hiding elements in Cypress:
+
+- .force(): Forces interactions with hidden elements (e.g., clicking, typing).
+
+- .invoke('show'): Temporarily makes an element visible for interactions.
+
+- .trigger(): Simulates user interactions (e.g., hover, click) to make hidden elements visible.
+
+- .should('not.be.visible'): Asserts that an element is hidden.
+
+- .invoke('css', 'display', 'none'): Manipulate the element’s visibility.
 
 Here’s a Cypress automation script for a challenge involving hidden elements 
 
@@ -103,16 +115,4 @@ Headless mode :
 ```
 npx cypress run
 ```
-
-Here's a quick rundown of common methods and approaches for hiding elements in Cypress:
-
-- .force(): Forces interactions with hidden elements (e.g., clicking, typing).
-
-- .invoke('show'): Temporarily makes an element visible for interactions.
-
-- .trigger(): Simulates user interactions (e.g., hover, click) to make hidden elements visible.
-
-- .should('not.be.visible'): Asserts that an element is hidden.
-
-- .invoke('css', 'display', 'none'): Manipulate the element’s visibility.
 
